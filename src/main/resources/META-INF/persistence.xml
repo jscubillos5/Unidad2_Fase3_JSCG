@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.Unidad2_Fase3_JSCG_Unidad2_Fase3_JSCG_jar_1.0PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>JPA.Rol</class>
+    <class>JPA.Usuario</class>
+    <class>JPA.DetalleFactura</class>
+    <class>JPA.Direccion</class>
+    <class>JPA.Telefono</class>
+    <class>JPA.Persona</class>
+    <class>JPA.TipoPersona</class>
+    <class>JPA.TipoIdentificacion</class>
+    <class>JPA.Empleado</class>
+    <class>JPA.Factura</class>
+    <class>JPA.Cliente</class>
+    <shared-cache-mode>ALL</shared-cache-mode>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/unidad_2_fase_3_301403_2_jscg?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="jcubillos"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Tatan_2093"/>
+    </properties>
+  </persistence-unit>
+</persistence>

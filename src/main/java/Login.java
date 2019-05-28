@@ -1,4 +1,12 @@
 
+import JPA.Usuario;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.swing.ImageIcon;
 
 /*
@@ -19,7 +27,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         ImageIcon logo = new ImageIcon();
         setIconImage(logo.getImage());
-        jPasswordFieldPasswordUser.setEchoChar((char)'*');        
+        jPasswordFieldPasswordUser.setEchoChar((char) '*');
     }
 
     /**
@@ -123,6 +131,28 @@ public class Login extends javax.swing.JFrame {
 
     private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
         // TODO add your handling code here:
+        if (jTextFieldUser.getText().isEmpty() || Arrays.toString(jPasswordFieldPasswordUser.getPassword()).isEmpty()) {
+            try {
+                throw new Exception("Por favor digite su usuario y su contraseña");
+            } catch (Exception e) {
+                try {
+                    System.out.println("Error al propagar la excepción de digitar usuario y contraseña");
+                    throw e;
+                } catch (Exception ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            /*EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.Unidad2_Fase3_JSCG_Unidad2_Fase3_JSCG_jar_1.0PU");
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            Usuario usuario = new Usuario();
+            usuario.setUsuario(jTextFieldUser.getText());
+            usuario.setClave(Arrays.toString(jPasswordFieldPasswordUser.getPassword()));
+            usuario.entityTransaction.commit();
+            entityManager.close();*/
+        }
     }//GEN-LAST:event_jButtonLogInActionPerformed
 
     /**
