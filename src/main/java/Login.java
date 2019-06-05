@@ -1,13 +1,18 @@
 
 import JPA.Usuario;
+import Util.GeneralException;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,6 +33,9 @@ public class Login extends javax.swing.JFrame {
         ImageIcon logo = new ImageIcon();
         setIconImage(logo.getImage());
         jPasswordFieldPasswordUser.setEchoChar((char) '*');
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width /2 - getWidth() / 2, size.height / 2 - getHeight() /2);
     }
 
     /**
@@ -129,29 +137,40 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @SuppressWarnings("UseSpecificCatch")
     private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
         // TODO add your handling code here:
-        if (jTextFieldUser.getText().isEmpty() || Arrays.toString(jPasswordFieldPasswordUser.getPassword()).isEmpty()) {
+        String passwordUser = new String(jPasswordFieldPasswordUser.getPassword());
+        if (passwordUser.isEmpty() || jTextFieldUser.getText().isEmpty()) {
             try {
-                throw new Exception("Por favor digite su usuario y su contraseña");
-            } catch (Exception e) {
-                try {
-                    System.out.println("Error al propagar la excepción de digitar usuario y contraseña");
-                    throw e;
-                } catch (Exception ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                JOptionPane.showMessageDialog(null, "Por favor digite su usuario y su contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+                throw new GeneralException("Por favor digite su usuario y su contraseña");
+            } catch (GeneralException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            /*EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.Unidad2_Fase3_JSCG_Unidad2_Fase3_JSCG_jar_1.0PU");
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            EntityTransaction entityTransaction = entityManager.getTransaction();
-            entityTransaction.begin();
-            Usuario usuario = new Usuario();
-            usuario.setUsuario(jTextFieldUser.getText());
-            usuario.setClave(Arrays.toString(jPasswordFieldPasswordUser.getPassword()));
-            usuario.entityTransaction.commit();
-            entityManager.close();*/
+            try {
+                EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("com.Unidad2_Fase3_JSCG_Unidad2_Fase3_JSCG_jar_1.0PU");
+                EntityManager em = entityManagerFactory.createEntityManager();
+                Query queryUser = em.createNamedQuery("Usuario.findByUsuarioAndClave");
+                queryUser.setParameter("usuario", jTextFieldUser.getText());
+                queryUser.setParameter("clave", passwordUser);
+                Usuario usuario = (Usuario) queryUser.getSingleResult();
+                JOptionPane.showMessageDialog(null, "Usuario: " + usuario.getUsuario(), "Bienvenido", JOptionPane.INFORMATION_MESSAGE);
+                Menu menu = new Menu();
+                menu.setVisible(true);
+                setVisible(false);
+            } catch (Exception ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                jTextFieldUser.setText("");
+                jPasswordFieldPasswordUser.setText("");
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña invalidos", "Error", JOptionPane.ERROR_MESSAGE);
+                try {
+                    throw new GeneralException("Usuario o contraseña invalidos");
+                } catch (GeneralException ex1) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
         }
     }//GEN-LAST:event_jButtonLogInActionPerformed
 

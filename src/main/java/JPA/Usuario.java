@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
     @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
     @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
-    @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado")})
+    @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado"),
+    @NamedQuery(name = "Usuario.findByUsuarioAndClave", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario and u.clave = :clave")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -134,5 +135,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "JPA.Usuario[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }
