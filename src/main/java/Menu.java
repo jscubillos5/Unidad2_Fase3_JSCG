@@ -1,8 +1,11 @@
 
+import Users.User;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,8 +27,17 @@ public class Menu extends javax.swing.JFrame {
      */
     class userAction implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Hola");
+            User user = new User();
+            setVisible(false);
+            user.setVisible(true);
+            user.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    setVisible(true);
+                }
+            });
         }
     }
 

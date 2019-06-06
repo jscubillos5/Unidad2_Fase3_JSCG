@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.util.Arrays;
+import static java.util.Locale.filter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -13,6 +14,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,17 +31,36 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
+    class UppercaseDocumentFilter extends DocumentFilter {
+
+        @Override
+        public void insertString(DocumentFilter.FilterBypass fb, int offset,
+                String text, AttributeSet attr) throws BadLocationException {
+            fb.insertString(offset, text.toUpperCase(), attr);
+        }
+
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offset, int length,
+                String text, AttributeSet attrs) throws BadLocationException {
+            fb.replace(offset, length, text.toUpperCase(), attrs);
+        }
+    }
+
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        DocumentFilter filter = new UppercaseDocumentFilter();
+        ((AbstractDocument) jTextFieldUser.getDocument()).setDocumentFilter(filter);
         ImageIcon logo = new ImageIcon();
         setIconImage(logo.getImage());
         jPasswordFieldPasswordUser.setEchoChar((char) '*');
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width /2 - getWidth() / 2, size.height / 2 - getHeight() /2);
+        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
+        JRootPane jrootPaneLogin = this.getRootPane();
+        jrootPaneLogin.setDefaultButton(jButtonLogIn);
     }
 
     /**
